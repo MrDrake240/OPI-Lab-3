@@ -1,7 +1,7 @@
 ﻿#include <windows.h>
 #include <iostream>
 #include <cmath>
-#include <string>  //
+#include <string>  
 
 using namespace std;
 
@@ -164,11 +164,17 @@ public:
 class IdBase
 {
 public:
-    static const int size = 50;
-    int base[size];                     //int *base = new int[size];
+    int size = 0;
+    int* base = new int[size];            //int *base = new int[size];
+    
+    IdBase()
+    {
+
+    }
+
     void BaseAdd(int id)
     {
-        //size++;
+        size++;
         for (int i = 0; i < size; i++)
         {
             if (base[i] <= 0)
@@ -201,7 +207,7 @@ int main()
 {
     setlocale(LC_ALL, "Rus");
     int command, comm2 = 2, id = 0;
-    IdBase data;
+    IdBase data();
     while (1)
     {
         IdAuto vid;
