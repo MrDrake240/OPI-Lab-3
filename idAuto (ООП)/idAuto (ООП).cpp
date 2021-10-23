@@ -168,16 +168,36 @@ class IdBase
 public:
     vector <int> vbase = { -1 };
     ofstream Fout;
-
+    ifstream Fin;
+    int fid = 0, fcount=0;
 
     IdBase()
     {
+        Fin.open("DataBase.txt");
+        
+        if (Fin.is_open())cout << "Обнаружены данные предыдущей сессии" << endl;
+        int i = 1;
+        int fcheck = 0;
+        while (!Fin.eof())
+        {
+            fcheck = fid;
+            Fin >> fid;
+            if (fid != fcheck)
+            {
+                BaseAdd(fid);
+                fcount++;
+            }
+        }
+        Fin.close();
+    }
 
+    int FileId()
+    {
+        return fid;
     }
 
     void BaseAdd(int id)
     {
-
         for (int i = 0; i < vbase.size(); i++)
         {
             if (vbase.at(i) <= 0)
@@ -208,7 +228,7 @@ public:
         Fout.open("DataBase.txt");
         for (int i = 1; i < vbase.size(); i++)
         {
-            Fout << vbase.at(i) << endl;;
+            Fout << vbase.at(i) << endl;
         }
         Fout.close();
     }
@@ -219,6 +239,7 @@ int main()
     setlocale(LC_ALL, "Rus");
     int command, comm2 = 2, id = 0;
     IdBase data;
+    id = data.FileId();
     while (1)
     {
         IdAuto vid;
