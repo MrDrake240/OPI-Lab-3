@@ -23,9 +23,9 @@ public:
         {"Неизвестно", "Impreza WRX", "XV", "BRZ", "Outback", "Forester", "Justy", "Levong"},
         {"Неизвестно", "Grand Vitara", "Celerio", "SX4", "XL7", "Alto", "Solio", "Liana"}
     };
-    int id = 0, mark = 0, wheel = 0, color = 0, year = 0, drive = 0, transmission = 0, model = 0, comm3 = 0;
-
-    int Getid()
+    int id = 0, mark = 0, wheel = 0, color = 0, year = 0, drive = 0, transmission = 0, model = 0, comm3 = 0; 
+    
+    int Getid()  //Ручной ввод id по возможным данным
     {
         cout << "Какая марка автомобиля ?\n1." << Mark[1] << "\n2." << Mark[2] << "\n3." << Mark[3] << "\n4." << Mark[4] << "\n5." << Mark[5] << "\n6." << Mark[6] << "\n7." << Mark[7] << endl;
         cin >> mark;
@@ -71,7 +71,7 @@ public:
         return id;
     }
 
-    void GetData(int id)
+    void GetData(int id)   //Расшифровка id 
     {
         mark = id / 10000000;
         model = (id / 1000000) % 10;
@@ -171,7 +171,7 @@ public:
     ifstream Fin;
     int fid = 0, fcount=0;
 
-    IdBase()
+    IdBase()   //конструктор класса (для взятие данных из файла при объявлении класса в main)
     {
         Fin.open("DataBase.txt");
         
@@ -180,9 +180,9 @@ public:
         {
             bool fcheck = 1;
             Fin >> fid;
-            for (int i = 0; i < vbase.size(); i++)
+            for (int i = 0; i < vbase.size(); i++)  //проверка всех элементов массива на совпадение со значением из файла
             {
-                if (vbase.at(i) == fid)
+                if (vbase.at(i) == fid) //если совпадение было найдено, то значение из файла не вносится
                 {
                     fcheck = 0;
                     break;
@@ -197,12 +197,12 @@ public:
         Fin.close();
     }
 
-    int FileId()
+    int FileId()  //передача id в main, если данные из файла были внесены (для корректной проверки наличия id в базе)
     {
         return fid;
     }
 
-    void BaseAdd(int id)
+    void BaseAdd(int id) //добавление элементов в базу данных
     {
         for (int i = 0; i < vbase.size(); i++)
         {
@@ -214,7 +214,7 @@ public:
         }
     }
 
-    int BasePrint()
+    int BasePrint() //вывод на экран всех id, находящихся в базе данных
     {
         int comm;
         cout << "Id:" << endl;
@@ -229,7 +229,7 @@ public:
         return vbase.at(comm);
     }
     
-    void InFile()
+    void InFile() //переписывание всех id в файл-хранилище
     {
         Fout.open("DataBase.txt");
         for (int i = 1; i < vbase.size(); i++)
@@ -249,7 +249,7 @@ int main()
     while (1)
     {
         IdAuto vid;
-        cout << "\nЧто вы хотите сделать?\n" << "1. Получить id\n" << "2. Ввести / расшифровать id\n" << "3. Внести id в базу данных\n" << "4. Выйти" << endl;
+        cout << "\nЧто вы хотите сделать?\n" << "1. Получить id\n" << "2. Внести id в базу данных\n" << "3. Расшифровать id\n" << "4. Выйти" << endl;
         cin >> command;
 
         if (command == 1)
@@ -259,6 +259,13 @@ int main()
         }
 
         else if (command == 2)
+        {
+            cout << "Введтие id (8 цифр)" << endl;
+            cin >> id;
+            data.BaseAdd(id);
+        }
+        
+        else if (command == 3)
         {
             if (id != 0)
             {
@@ -276,13 +283,6 @@ int main()
                 cin >> id;
                 vid.GetData(id);
             }
-        }
-
-        else if (command == 3)
-        {
-            cout << "Введтие id (8 цифр)" << endl;
-            cin >> id;
-            data.BaseAdd(id);
         }
 
         else if (command == 4)
