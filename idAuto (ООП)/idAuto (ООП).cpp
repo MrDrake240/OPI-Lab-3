@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>  
+#include <vector>
 
 using namespace std;
 
@@ -164,9 +165,9 @@ public:
 class IdBase
 {
 public:
-    int size = 0;
-    int* base = new int[size];            //int *base = new int[size];
+    vector <int> vbase = { -1 };
     
+
     IdBase()
     {
 
@@ -174,12 +175,12 @@ public:
 
     void BaseAdd(int id)
     {
-        size++;
-        for (int i = 0; i < size; i++)
+
+        for (int i = 0; i < vbase.size(); i++)
         {
-            if (base[i] <= 0)
+            if (vbase.at(i) <= 0)
             {
-                base[i] = id;
+                vbase.push_back(id);
                 break;
             }
         }
@@ -189,25 +190,25 @@ public:
     {
         int comm;
         cout << "Id:" << endl;
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < vbase.size(); i++)
         {
-            if (base[i] > 0)
+            if (vbase.at(i) > 0)
             {
-                cout << i + 1 << ". " << base[i] << endl;
+                cout << i << ". " << vbase.at(i) << endl;
             }
         }
         cin >> comm;
-        return base[comm - 1];
+        return vbase.at(comm);
     }
 
-
+    
 };
 
 int main()
 {
     setlocale(LC_ALL, "Rus");
     int command, comm2 = 2, id = 0;
-    IdBase data();
+    IdBase data;
     while (1)
     {
         IdAuto vid;
@@ -258,5 +259,3 @@ int main()
         }
     }
 }
-
-
