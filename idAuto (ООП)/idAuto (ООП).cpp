@@ -3,6 +3,7 @@
 #include <cmath>
 #include <string>  
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -166,7 +167,8 @@ class IdBase
 {
 public:
     vector <int> vbase = { -1 };
-    
+    ofstream Fout;
+
 
     IdBase()
     {
@@ -200,8 +202,16 @@ public:
         cin >> comm;
         return vbase.at(comm);
     }
-
     
+    void InFile()
+    {
+        Fout.open("DataBase.txt");
+        for (int i = 1; i < vbase.size(); i++)
+        {
+            Fout << vbase.at(i) << endl;;
+        }
+        Fout.close();
+    }
 };
 
 int main()
@@ -250,6 +260,7 @@ int main()
 
         else if (command == 4)
         {
+            data.InFile();
             return 0;
         }
 
