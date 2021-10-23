@@ -176,13 +176,19 @@ public:
         Fin.open("DataBase.txt");
         
         if (Fin.is_open())cout << "Обнаружены данные предыдущей сессии" << endl;
-        int i = 1;
-        int fcheck = 0;
         while (!Fin.eof())
         {
-            fcheck = fid;
+            bool fcheck = 1;
             Fin >> fid;
-            if (fid != fcheck)
+            for (int i = 0; i < vbase.size(); i++)
+            {
+                if (vbase.at(i) == fid)
+                {
+                    fcheck = 0;
+                    break;
+                }
+            }
+            if (fcheck == 1)
             {
                 BaseAdd(fid);
                 fcount++;
